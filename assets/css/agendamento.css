@@ -1,0 +1,239 @@
+/* ============================================================
+   The Joãozin Barber — Agendamento online (usa as variáveis do style.css)
+============================================================ */
+.section--agendar {
+  background:
+    radial-gradient(ellipse 55% 45% at 80% 0%, rgba(var(--accent-rgb), .07), transparent 60%),
+    var(--bg-2);
+}
+
+/* Aba de menu em destaque */
+.nav a.nav__cta {
+  color: var(--dark-ink);
+  background: linear-gradient(135deg, var(--gold), var(--gold-2));
+  padding: .5em 1.2em; border-radius: 999px; font-weight: 700;
+  box-shadow: 0 4px 18px rgba(var(--accent-rgb), .25);
+}
+.nav a.nav__cta:hover { color: var(--dark-ink); transform: translateY(-1px); }
+
+/* Aviso de modo demonstração */
+.ag-demo {
+  max-width: 720px; margin: 0 auto 1.8rem;
+  background: rgba(var(--accent-rgb), .09); border: 1px solid rgba(var(--accent-rgb), .38);
+  color: #e4e4ec; border-radius: 12px; padding: .8rem 1.1rem;
+  font-size: .9rem; text-align: center;
+}
+
+/* Wizard */
+.ag-wizard { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
+.ag-step__label {
+  display: block; font-weight: 700; color: var(--gold);
+  font-size: .95rem; margin-bottom: .9rem; letter-spacing: .02em;
+}
+.ag-step[hidden] { display: none; }
+
+/* Seleção de profissional (barbeiro) */
+.ag-barbers {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem;
+}
+.ag-barber {
+  display: flex; flex-direction: column; align-items: center; gap: .6rem;
+  background: var(--surface); border: 1px solid var(--line); color: var(--text);
+  border-radius: 14px; padding: 1rem .6rem; cursor: pointer;
+  font-family: var(--font-body); font-size: .95rem;
+  transition: border-color .15s, background .15s, transform .1s;
+}
+.ag-barber:hover { border-color: rgba(var(--accent-rgb), .6); transform: translateY(-2px); }
+.ag-barber__foto {
+  width: 72px; height: 72px; border-radius: 50%; object-fit: cover;
+  border: 2px solid var(--line); transition: border-color .15s;
+}
+.ag-barber__nome { font-weight: 600; text-transform: capitalize; }
+.ag-barber.is-active {
+  border-color: var(--gold);
+  background: rgba(var(--accent-rgb), .1);
+}
+.ag-barber.is-active .ag-barber__foto { border-color: var(--gold); }
+
+/* Chips de serviço */
+.ag-chips { display: flex; flex-wrap: wrap; gap: .7rem; }
+.ag-chip {
+  display: inline-flex; align-items: center; gap: .6em; text-align: left;
+  background: var(--surface); border: 1px solid var(--line); color: var(--text);
+  border-radius: 14px; padding: .65em 1.1em; cursor: pointer; font-size: .95rem;
+  font-family: var(--font-body); transition: border-color .15s, background .15s, transform .1s;
+}
+.ag-chip:hover { border-color: rgba(var(--accent-rgb), .6); transform: translateY(-1px); }
+.ag-chip.is-active {
+  background: linear-gradient(135deg, var(--gold), var(--gold-2));
+  color: var(--dark-ink); border-color: var(--gold);
+}
+.ag-chip__ic { font-size: 1.2em; }
+.ag-chip__txt { display: flex; flex-direction: column; line-height: 1.15; }
+.ag-chip__nome { font-weight: 600; }
+.ag-chip__meta { font-size: .78rem; color: var(--muted); margin-top: .12rem; }
+.ag-chip.is-active .ag-chip__nome { font-weight: 700; }
+.ag-chip.is-active .ag-chip__meta { color: rgba(20, 20, 26, .72); }
+.ag-chips .ag-hint { width: 100%; }
+
+/* Calendário de dias (um mês, com navegação) */
+.ag-cal { max-width: 400px; margin: 0 auto; touch-action: pan-y; }
+.ag-cal__mes {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 14px; padding: 1.1rem 1.1rem 1.3rem;
+}
+.ag-cal__nav {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .5rem; margin-bottom: 1rem;
+}
+.ag-cal__titulo {
+  flex: 1; text-align: center; font-weight: 700; color: var(--text);
+  font-size: 1.05rem; text-transform: capitalize;
+}
+.ag-cal__seta {
+  flex: 0 0 auto; width: 38px; height: 38px; border-radius: 50%;
+  background: var(--bg); border: 1px solid var(--line); color: var(--text);
+  font-size: 1.4rem; line-height: 1; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color .12s, color .12s;
+}
+.ag-cal__seta:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+.ag-cal__seta:disabled { opacity: .3; cursor: not-allowed; }
+.ag-cal__grade {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: .28rem;
+}
+.ag-cal__wd {
+  text-align: center; font-size: .68rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .03em; padding-bottom: .3rem;
+}
+.ag-cal__vazio { aspect-ratio: 1 / 1; }
+.ag-cal__dia {
+  aspect-ratio: 1 / 1; display: flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid transparent; color: var(--text);
+  border-radius: 9px; cursor: pointer; font-size: .92rem; font-weight: 600;
+  font-family: var(--font-body); transition: background .12s, border-color .12s, color .12s;
+}
+.ag-cal__dia:hover:not(.is-disabled):not(.is-active) { border-color: var(--gold); color: var(--gold); }
+.ag-cal__dia--hoje { box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), .5); }
+.ag-cal__dia.is-disabled {
+  color: var(--muted); opacity: .35; cursor: not-allowed;
+}
+.ag-cal__dia.is-active {
+  background: linear-gradient(135deg, var(--gold), var(--gold-2));
+  color: var(--dark-ink); border-color: var(--gold);
+}
+
+/* Grade de horários */
+.ag-times { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: .6rem; }
+.ag-time {
+  background: var(--surface); border: 1px solid var(--line); color: var(--text);
+  border-radius: 10px; padding: .7em 0; cursor: pointer; font-size: 1rem; font-weight: 600;
+  font-family: var(--font-body); transition: border-color .15s, background .15s, transform .1s;
+}
+.ag-time:hover:not(.is-disabled) { border-color: var(--gold); transform: translateY(-1px); }
+.ag-time.is-active {
+  background: linear-gradient(135deg, var(--gold), var(--gold-2));
+  color: var(--dark-ink); border-color: var(--gold);
+}
+.ag-time.is-disabled {
+  opacity: .32; cursor: not-allowed; text-decoration: line-through;
+}
+.ag-time.is-ocupado {
+  opacity: .62; cursor: pointer; border-style: dashed; border-color: var(--line);
+}
+.ag-time.is-ocupado:hover { opacity: 1; border-color: var(--gold); color: var(--gold); }
+.ag-time__lock { font-size: .68em; margin-left: .3em; opacity: .85; }
+.ag-hint { color: var(--muted); font-size: .92rem; }
+.ag-hint--sub { margin: -.5rem 0 .9rem; font-size: .85rem; }
+.ag-times .ag-hint { grid-column: 1 / -1; }
+
+/* Formulário */
+.ag-form { display: flex; flex-direction: column; gap: .9rem; }
+.ag-input, .ag-form input {
+  width: 100%; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 10px; padding: .85em 1em; color: var(--text); font-size: 1rem;
+  font-family: var(--font-body);
+}
+.ag-input:focus, .ag-form input:focus { outline: none; border-color: var(--gold); }
+.ag-summary {
+  background: rgba(var(--accent-rgb), .08); border: 1px dashed rgba(var(--accent-rgb), .5);
+  border-radius: 10px; padding: .8em 1em; color: var(--text); font-size: .98rem;
+}
+.ag-summary strong { color: var(--gold); }
+#ag-confirmar[disabled] { opacity: .45; cursor: not-allowed; transform: none; box-shadow: none; }
+.ag-msg { min-height: 1.2em; font-size: .92rem; margin: 0; }
+.ag-msg--erro { color: #ff8a80; }
+.ag-msg--info { color: var(--muted); }
+.ag-msg--ok { color: #7ee2a8; }
+
+/* Link admin */
+.ag-admin-link {
+  display: block; margin: 2.5rem auto 0; background: none; border: 0;
+  color: var(--muted); font-size: .85rem; cursor: pointer; text-decoration: underline;
+  font-family: var(--font-body);
+}
+.ag-admin-link:hover { color: var(--gold); }
+
+/* Modais (admin e sucesso) */
+.ag-modal {
+  position: fixed; inset: 0; z-index: 120;
+  background: rgba(0, 0, 0, .85); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center; padding: 1.2rem;
+}
+.ag-modal[hidden] { display: none; }
+.ag-modal__box {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 16px; padding: 2rem 1.8rem; width: min(460px, 100%);
+  max-height: 88vh; overflow-y: auto; text-align: center;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .6);
+}
+.ag-modal__box h3 { font-size: 1.4rem; margin-bottom: .8rem; }
+.ag-modal__acoes { display: flex; gap: .8rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
+
+/* Sucesso */
+.ag-ok__check {
+  width: 64px; height: 64px; margin: 0 auto 1rem; border-radius: 50%;
+  background: linear-gradient(135deg, #25d366, #128c4b); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700;
+}
+.ag-ok__resumo { font-size: 1.05rem; margin: .6rem 0; }
+.ag-ok__resumo strong { color: var(--gold); }
+.ag-ok__nota { color: var(--muted); font-size: .9rem; margin-bottom: 1.4rem; }
+#ag-sucesso-corpo .btn { width: 100%; justify-content: center; margin-bottom: .7rem; }
+
+/* Lista admin */
+.ag-lista { list-style: none; margin: 1rem 0 0; padding: 0; text-align: left; }
+.ag-lista__item {
+  display: flex; align-items: center; justify-content: space-between; gap: .8rem;
+  padding: .9rem 0; border-bottom: 1px solid var(--line); font-size: .92rem;
+}
+.ag-lista__item span { color: var(--muted); }
+.ag-lista__wa { color: var(--gold); font-size: .88rem; }
+.ag-del {
+  flex: 0 0 auto; background: rgba(255, 138, 128, .12); border: 1px solid rgba(255, 138, 128, .4);
+  color: #ff8a80; border-radius: 8px; padding: .5em .7em; cursor: pointer; font-size: 1rem;
+}
+.ag-del:hover { background: rgba(255, 138, 128, .22); }
+.ag-del[disabled] { opacity: .4; cursor: wait; }
+
+/* Detalhe do horário reservado */
+.ag-det { text-align: left; margin: 1rem 0 .4rem; }
+.ag-det__linha {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+  padding: .7rem 0; border-bottom: 1px solid var(--line);
+}
+.ag-det__linha:last-child { border-bottom: 0; }
+.ag-det__linha span { color: var(--muted); font-size: .85rem; }
+.ag-det__linha a { color: var(--gold); }
+.btn--del-full {
+  background: rgba(255, 138, 128, .12); border: 1px solid rgba(255, 138, 128, .45); color: #ff8a80;
+}
+.btn--del-full:hover { background: rgba(255, 138, 128, .2); }
+.btn--del-full[disabled] { opacity: .5; cursor: wait; }
+#ag-detalhe-corpo .ag-modal__acoes { flex-direction: column; }
+#ag-detalhe-corpo .ag-modal__acoes .btn { width: 100%; justify-content: center; }
+
+@media (max-width: 480px) {
+  .ag-modal__box { padding: 1.6rem 1.2rem; }
+  #ag-sucesso-corpo .btn { width: 100%; }
+}

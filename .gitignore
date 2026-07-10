@@ -1,0 +1,12 @@
+# Dependências / build
+node_modules/
+.vercel/
+
+# Variáveis de ambiente (o token vai nas Environment Variables da Vercel, NUNCA aqui)
+.env
+.env.local
+.env.*.local
+
+# Sistema
+.DS_Store
+Thumbs.db

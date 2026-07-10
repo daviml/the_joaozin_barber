@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Joãozin Barber — Barbearia em Uberlândia | Corte, Barba e Sobrancelha</title>
+  <meta name="description" content="The Joãozin Barber em Uberlândia-MG (Nossa Sra. Aparecida). Corte, barba, sobrancelha e pigmentação com hora marcada. Agende online ou pelo WhatsApp!">
+  <meta name="theme-color" content="#0b0b0d">
+  <link rel="canonical" href="https://thejoaozinbarber.vercel.app/">
+
+  <!-- ============================================================
+       ⚠️ TROQUE a URL abaixo pelo domínio real do site (ex.:
+       https://thejoaozinbarber.vercel.app/ ou o domínio próprio).
+       As URLs de Open Graph precisam ser ABSOLUTAS.
+  ============================================================ -->
+  <!-- Open Graph (WhatsApp/Facebook/LinkedIn) -->
+  <meta property="og:site_name" content="The Joãozin Barber">
+  <meta property="og:title" content="The Joãozin Barber — Uberlândia">
+  <meta property="og:description" content="Corte, barba, sobrancelha e pigmentação com hora marcada. Agende online ou pelo WhatsApp!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thejoaozinbarber.vercel.app/">
+  <meta property="og:image" content="https://thejoaozinbarber.vercel.app/assets/img/og.jpg">
+  <meta property="og:image:secure_url" content="https://thejoaozinbarber.vercel.app/assets/img/og.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Fachada da The Joãozin Barber em Uberlândia">
+  <meta property="og:locale" content="pt_BR">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Joãozin Barber — Uberlândia">
+  <meta name="twitter:description" content="Corte, barba, sobrancelha e pigmentação com hora marcada. Agende online ou pelo WhatsApp!">
+  <meta name="twitter:image" content="https://thejoaozinbarber.vercel.app/assets/img/og.jpg">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/agendamento.css">
+
+  <!-- ============================================================
+       GOOGLE ADS / ANALYTICS (gtag)
+       1. Crie a conta no Google Ads e pegue o ID de conversão (AW-XXXXXXXXXX)
+       2. Substitua AW-XXXXXXXXXX abaixo e descomente o bloco
+  ============================================================ -->
+  <!--
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-XXXXXXXXXX');
+  </script>
+  -->
+
+  <!-- SEO local: dados estruturados -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BarberShop",
+    "name": "The Joãozin Barber",
+    "image": "assets/img/fachada.jpg",
+    "telephone": "+5534997739176",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "R. Feliciano de Morais, 647 - Nossa Sra. Aparecida",
+      "addressLocality": "Uberlândia",
+      "addressRegion": "MG",
+      "postalCode": "38400-684",
+      "addressCountry": "BR"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "09:00",
+        "closes": "20:00"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": "Saturday",
+        "opens": "09:00",
+        "closes": "17:00"
+      }
+    ],
+    "sameAs": ["https://www.instagram.com/the_joaozin_barber/"],
+    "priceRange": "$$"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header class="header" id="topo">
+    <div class="container header__inner">
+      <a href="#topo" class="header__brand">
+        <img src="assets/img/logo.png" alt="Logo The Joãozin Barber" width="44" height="44">
+        <span>The <em>Joãozin</em> Barber</span>
+      </a>
+      <nav class="nav" id="nav">
+        <a href="#servicos">Serviços</a>
+        <a href="#galeria">Galeria</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#localizacao">Localização</a>
+        <a href="#agendar" class="nav__cta">Agendar horário</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero__bg" aria-hidden="true"></div>
+    <div class="container hero__content reveal">
+      <p class="hero__kicker">Barbearia · Uberlândia-MG</p>
+      <h1>Seu visual <span class="gold">no estilo.</span></h1>
+      <p class="hero__sub">Corte, barba, sobrancelha e pigmentação — com acabamento caprichado e <strong>hora marcada</strong>, sem fila de espera.</p>
+      <div class="hero__cta">
+        <a href="#agendar" class="btn btn--gold btn--lg">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          Agende um horário
+        </a>
+        <a href="https://wa.me/5534997739176?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20um%20hor%C3%A1rio%20%F0%9F%92%88" class="btn btn--whats btn--lg js-whats" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.2-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.2-.2-.4-.3z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+      <div class="hero__badges">
+        <div class="badge"><span class="badge__num">+1,7 mil</span><span>seguidores no Instagram</span></div>
+        <div class="badge"><span class="badge__num">Seg–Sáb</span><span>com hora marcada</span></div>
+        <div class="badge"><span class="badge__num">+6</span><span>serviços na cadeira</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AGENDAMENTO ================= -->
+  <section class="section section--agendar" id="agendar">
+    <div class="container">
+      <p class="section__kicker reveal">Agendamento online</p>
+      <h2 class="section__title reveal">Marque seu horário em segundos</h2>
+
+      <div class="ag-demo reveal" id="ag-demo" hidden>
+        ⚙️ <strong>Modo demonstração</strong> — os agendamentos estão sendo salvos só neste navegador.
+        Publique na Vercel com o token configurado para salvar de verdade no GitHub.
+      </div>
+
+      <div class="ag-wizard reveal">
+        <div class="ag-step">
+          <span class="ag-step__label">1 · Escolha o profissional</span>
+          <p class="ag-hint ag-hint--sub">Cada profissional tem sua própria agenda e seus serviços.</p>
+          <div class="ag-barbers" id="ag-barbeiros"></div>
+        </div>
+
+        <div class="ag-step">
+          <span class="ag-step__label">2 · Escolha o(s) serviço(s)</span>
+          <p class="ag-hint ag-hint--sub">Pode marcar mais de um — ex.: Corte + Barba.</p>
+          <div class="ag-chips" id="ag-servicos"></div>
+        </div>
+
+        <div class="ag-step">
+          <span class="ag-step__label">3 · Escolha o dia</span>
+          <div class="ag-days" id="ag-dias"></div>
+        </div>
+
+        <div class="ag-step">
+          <span class="ag-step__label">4 · Escolha o horário</span>
+          <div class="ag-times" id="ag-horarios"></div>
+        </div>
+
+        <form class="ag-step ag-form" id="ag-form" novalidate>
+          <span class="ag-step__label">5 · Seus dados</span>
+          <input type="text" id="ag-nome" placeholder="Seu nome" autocomplete="name" maxlength="80">
+          <input type="tel" id="ag-whats" placeholder="WhatsApp com DDD — (34) 99999-9999" autocomplete="tel" inputmode="numeric">
+          <div class="ag-summary" id="ag-resumo" hidden></div>
+          <button type="submit" class="btn btn--gold btn--lg" id="ag-confirmar" disabled>Confirmar agendamento</button>
+          <p class="ag-msg" id="ag-msg"></p>
+        </form>
+      </div>
+
+      <button type="button" class="ag-admin-link" id="ag-gerenciar">🔒 Gerenciar agendamentos (barbeiro)</button>
+    </div>
+
+    <!-- Modal: gerenciar/remover (senha) -->
+    <div class="ag-modal" id="ag-admin" hidden>
+      <div class="ag-modal__box" id="ag-admin-corpo"></div>
+    </div>
+
+    <!-- Modal: sucesso -->
+    <div class="ag-modal" id="ag-sucesso" hidden>
+      <div class="ag-modal__box" id="ag-sucesso-corpo"></div>
+    </div>
+
+    <!-- Modal: detalhe do horário reservado (senha do barbeiro) -->
+    <div class="ag-modal" id="ag-detalhe" hidden>
+      <div class="ag-modal__box" id="ag-detalhe-corpo"></div>
+    </div>
+  </section>
+
+  <!-- ================= SERVIÇOS ================= -->
+  <section class="section" id="servicos">
+    <div class="container">
+      <p class="section__kicker reveal">Tabela de serviços</p>
+      <h2 class="section__title reveal">O que a gente faz de melhor</h2>
+
+      <h3 class="menu__cat reveal">Cabelo</h3>
+      <div class="menu reveal">
+        <div class="menu__item">
+          <div class="menu__row">
+            <span class="menu__name">Corte de cabelo</span>
+            <span class="menu__lead" aria-hidden="true"></span>
+            <span class="menu__price">R$ 40</span>
+          </div>
+          <p class="menu__desc">⏱ 45 min</p>
+        </div>
+        <div class="menu__item">
+          <div class="menu__row">
+            <span class="menu__name">Corte + Barba <span class="menu__badge">combo</span></span>
+            <span class="menu__lead" aria-hidden="true"></span>
+            <span class="menu__price">R$ 65</span>
+          </div>
+          <p class="menu__desc">⏱ 60 min</p>
+        </div>
+        <div class="menu__item">
+          <div class="menu__row">
+            <span class="menu__name">Acabamento (pezinho)</span>
+            <span class="menu__lead" aria-hidden="true"></span>
+            <span class="menu__price">R$ 20</span>
+          </div>
+          <p class="menu__desc">⏱ 20 min</p>
+        </div>
+        <div class="menu__item">
+          <div class="menu__row">
+            <span class="menu__name">Pigmentação</span>
+            <span class="menu__lead" aria-hidden="true"></span>
+            <span class="menu__price">R$ 30</span>
+          </div>
+          <p class="menu__desc">⏱ 20 min</p>
+        </div>
+      </div>
+
+      <h3 class="menu__cat reveal">Barba</h3>
+      <div class="menu reveal">
+        <div class="menu__item">
+          <div class="menu__row">
+            <span class="menu__name">Barba completa</span>
+            <span class="menu__lead" aria-hidden="true"></span>
+            <span class="menu__price">R$ 30</span>
+          </div>
+          <p class="menu__desc">⏱ 30 min</p>
+        </div>
+        <div class="menu__item">
+          <div class="menu__row">
+            <span class="menu__name">Desenho de barba</span>
+            <span class="menu__lead" aria-hidden="true"></span>
+            <span class="menu__price">R$ 20</span>
+          </div>
+          <p class="menu__desc">⏱ 15 min</p>
+        </div>
+      </div>
+
+      <h3 class="menu__cat reveal">Outros</h3>
+      <div class="menu reveal">
+        <div class="menu__item">
+          <div class="menu__row">
+            <span class="menu__name">Sobrancelha</span>
+            <span class="menu__lead" aria-hidden="true"></span>
+            <span class="menu__price">R$ 15</span>
+          </div>
+          <p class="menu__desc">⏱ 15 min</p>
+        </div>
+        <div class="menu__item">
+          <div class="menu__row">
+            <span class="menu__name">Depilação de nariz / orelha</span>
+            <span class="menu__lead" aria-hidden="true"></span>
+            <span class="menu__price">R$ 10</span>
+          </div>
+          <p class="menu__desc">⏱ 10 min</p>
+        </div>
+      </div>
+      <p class="section__note reveal">Atendimento com <strong>hora marcada</strong> — agende online aqui pelo site ou chame no WhatsApp.</p>
+    </div>
+  </section>
+
+  <!-- ================= GALERIA ================= -->
+  <section class="section section--dark" id="galeria">
+    <div class="container">
+      <p class="section__kicker reveal">Galeria</p>
+      <h2 class="section__title reveal">Trabalhos que falam por si</h2>
+      <div class="gallery reveal">
+        <img src="assets/img/corte-01.jpg" alt="Corte finalizado na The Joãozin Barber" loading="lazy">
+        <img src="assets/img/corte-02.jpg" alt="Cliente da The Joãozin Barber" loading="lazy">
+        <img src="assets/img/corte-03.jpg" alt="Atendimento na The Joãozin Barber" loading="lazy">
+        <img src="assets/img/corte-04.jpg" alt="Corte com acabamento na The Joãozin Barber" loading="lazy">
+        <img src="assets/img/corte-05.jpg" alt="Cliente satisfeito da The Joãozin Barber" loading="lazy">
+        <img src="assets/img/corte-06.jpg" alt="Resultado de corte na The Joãozin Barber" loading="lazy">
+      </div>
+      <div class="center reveal">
+        <a href="https://www.instagram.com/the_joaozin_barber/" class="btn btn--outline" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2a3.8 3.8 0 0 1-2.3 2.3c-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4a3.8 3.8 0 0 1-2.3-2.3c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.8.1-1.1.1-1.5.2-1.9.3-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.1.4-.3.8-.3 1.9-.1 1.3-.1 1.7-.1 4.8s0 3.5.1 4.8c.1 1.1.2 1.5.3 1.9.2.5.4.8.7 1.1.3.3.6.5 1.1.7.4.1.8.3 1.9.3 1.3.1 1.7.1 4.8.1s3.5 0 4.8-.1c1.1-.1 1.5-.2 1.9-.3.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.1-.4.3-.8.3-1.9.1-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c-.1-1.1-.2-1.5-.3-1.9-.2-.5-.4-.8-.7-1.1a2 2 0 0 0-1.1-.7c-.4-.1-.8-.3-1.9-.3-1.3-.1-1.7-.1-4.8-.1zm0 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4zm5.2-3.1a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
+          Ver mais no Instagram
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SOBRE ================= -->
+  <section class="section" id="sobre">
+    <div class="container split">
+      <div class="split__img reveal">
+        <img src="assets/img/fachada.jpg" alt="Fachada da The Joãozin Barber na R. Feliciano de Morais, 647" loading="lazy">
+      </div>
+      <div class="split__text reveal">
+        <p class="section__kicker">Sobre a barbearia</p>
+        <h2 class="section__title">Estilo, cuidado e um bom papo</h2>
+        <p>A <strong>The Joãozin Barber</strong> é a barbearia do <strong>João Vitor Rodrigues</strong>, no bairro Nossa Sra. Aparecida, em Uberlândia. Aqui é ambiente tranquilo, atendimento de verdade e acabamento que faz diferença — do corte à barba, da sobrancelha à pigmentação.</p>
+        <ul class="checklist">
+          <li>Atendimento com <strong>hora marcada</strong></li>
+          <li>Corte · Barba · Sobrancelha · Pigmentação</li>
+          <li>Comunidade de <strong>+1,7 mil</strong> seguidores no Instagram</li>
+          <li>Fácil acesso na Nossa Sra. Aparecida</li>
+        </ul>
+        <a href="https://wa.me/5534997739176?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20um%20hor%C3%A1rio%20%F0%9F%92%88" class="btn btn--gold js-whats" target="_blank" rel="noopener">Quero agendar</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LOCALIZAÇÃO ================= -->
+  <section class="section section--dark" id="localizacao">
+    <div class="container split split--reverse">
+      <div class="split__text reveal">
+        <p class="section__kicker">Localização &amp; horários</p>
+        <h2 class="section__title">Cola aqui na Feliciano de Morais</h2>
+        <address class="info">
+          <p><strong>📍 Endereço</strong><br>R. Feliciano de Morais, 647 – Nossa Sra. Aparecida<br>Uberlândia – MG<br>CEP 38400-684</p>
+          <p><strong>🕗 Horários</strong><br>Segunda a sexta: 09:00 às 20:00<br>Sábado: 09:00 às 17:00</p>
+          <p><strong>📱 Contato</strong><br>
+            <a href="https://wa.me/5534997739176" class="js-whats" target="_blank" rel="noopener">(34) 99773-9176 (WhatsApp)</a><br>
+            <a href="https://www.instagram.com/the_joaozin_barber/" target="_blank" rel="noopener">@the_joaozin_barber</a>
+          </p>
+        </address>
+        <a href="https://www.google.com/maps/search/?api=1&query=The+Jo%C3%A3ozin+Barber+R.+Feliciano+de+Morais+647+Uberl%C3%A2ndia" class="btn btn--gold" target="_blank" rel="noopener">Traçar rota no Maps</a>
+      </div>
+      <div class="split__img split__img--map reveal">
+        <iframe
+          src="https://www.google.com/maps?q=R.+Feliciano+de+Morais,+647+-+Nossa+Sra.+Aparecida,+Uberl%C3%A2ndia+-+MG&output=embed"
+          width="100%" height="380" style="border:0" loading="lazy" allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade" title="Mapa — The Joãozin Barber"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA FINAL ================= -->
+  <section class="cta-final">
+    <div class="container center reveal">
+      <h2>Bora renovar o visual?</h2>
+      <p>Agende online aqui mesmo ou chama no WhatsApp. Rapidinho você tá na cadeira.</p>
+      <a href="#agendar" class="btn btn--gold btn--lg">Agendar agora</a>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <img src="assets/img/logo.png" alt="" width="56" height="56">
+      <p><strong>The Joãozin Barber</strong><br>R. Feliciano de Morais, 647 – Nossa Sra. Aparecida, Uberlândia – MG</p>
+      <div class="footer__social">
+        <a href="https://www.instagram.com/the_joaozin_barber/" target="_blank" rel="noopener">Instagram</a> ·
+        <a href="https://wa.me/5534997739176" class="js-whats" target="_blank" rel="noopener">WhatsApp</a> ·
+        <a href="https://www.google.com/maps/search/?api=1&query=The+Jo%C3%A3ozin+Barber+R.+Feliciano+de+Morais+647+Uberl%C3%A2ndia" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+      <p class="footer__copy">© <span id="ano"></span> The Joãozin Barber. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Botões sociais flutuantes -->
+  <a href="https://www.instagram.com/the_joaozin_barber/"
+     class="insta-float" target="_blank" rel="noopener" aria-label="Instagram da barbearia">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2a3.8 3.8 0 0 1-2.3 2.3c-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4a3.8 3.8 0 0 1-2.3-2.3c-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.8.1-1.1.1-1.5.2-1.9.3-.5.2-.8.4-1.1.7-.3.3-.5.6-.7 1.1-.1.4-.3.8-.3 1.9-.1 1.3-.1 1.7-.1 4.8s0 3.5.1 4.8c.1 1.1.2 1.5.3 1.9.2.5.4.8.7 1.1.3.3.6.5 1.1.7.4.1.8.3 1.9.3 1.3.1 1.7.1 4.8.1s3.5 0 4.8-.1c1.1-.1 1.5-.2 1.9-.3.5-.2.8-.4 1.1-.7.3-.3.5-.6.7-1.1.1-.4.3-.8.3-1.9.1-1.3.1-1.7.1-4.8s0-3.5-.1-4.8c-.1-1.1-.2-1.5-.3-1.9-.2-.5-.4-.8-.7-1.1a2 2 0 0 0-1.1-.7c-.4-.1-.8-.3-1.9-.3-1.3-.1-1.7-.1-4.8-.1zm0 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.8a3.2 3.2 0 1 0 0 6.4 3.2 3.2 0 0 0 0-6.4zm5.2-3.1a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>
+  </a>
+
+  <!-- WhatsApp flutuante -->
+  <a href="https://wa.me/5534997739176?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20um%20hor%C3%A1rio%20%F0%9F%92%88"
+     class="whats-float js-whats" target="_blank" rel="noopener" aria-label="Agendar pelo WhatsApp">
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4 0-.5.2-.7l.5-.6c.1-.2.1-.3 0-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.2s.9 2.5 1.1 2.7c.1.2 1.8 2.8 4.4 3.9.6.3 1.1.4 1.5.6.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.2-.2-.2-.4-.3z"/></svg>
+  </a>
+
+  <!-- Botão instalar PWA (aparece só quando instalável) -->
+  <button class="install-btn" id="installBtn" hidden>📲 Instalar app</button>
+
+  <!-- Lightbox da galeria -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lightbox__close" aria-label="Fechar">✕</button>
+    <img src="" alt="Foto ampliada">
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/agendamento.js"></script>
+</body>
+</html>
