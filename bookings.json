@@ -1,1 +1,14 @@
-{ "bookings": [] }
+{
+  "bookings": [
+    {
+      "id": "mrggvjco-et7ot",
+      "date": "2026-07-13",
+      "time": "09:00",
+      "name": "davi moraes ldeira",
+      "phone": "34999931020",
+      "service": "Corte de cabelo",
+      "barber": "joaozin",
+      "createdAt": "2026-07-11T14:35:37.272Z"
+    }
+  ]
+}
