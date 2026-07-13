@@ -51,15 +51,15 @@ a { color: var(--gold); text-decoration: none; }
 .btn--gold:hover { box-shadow: 0 10px 30px rgba(var(--accent-rgb), .38); }
 .btn--outline { background: transparent; border-color: var(--line); color: var(--text); }
 .btn--outline:hover { border-color: var(--gold); color: var(--gold); }
-/* WhatsApp: verde da marca, mas leve (translúcido) pra não pesar a tela */
+/* WhatsApp: verde sólido da marca */
 .btn--whats {
-  background: rgba(37, 211, 102, .18);
-  border-color: rgba(37, 211, 102, .55);
-  color: #eafff3;
+  background: var(--whats);
+  border-color: var(--whats);
+  color: #fff;
 }
 .btn--whats:hover {
-  background: rgba(37, 211, 102, .3);
-  border-color: rgba(37, 211, 102, .85);
+  background: #1fb457;
+  border-color: #1fb457;
   color: #fff;
 }
 .btn--lg { font-size: 1.08rem; padding: 1em 2em; }
@@ -99,7 +99,7 @@ a { color: var(--gold); text-decoration: none; }
       rgba(11, 11, 13, .86) 72%,
       var(--bg) 100%),
     radial-gradient(ellipse 95% 55% at 50% 112%, rgba(200, 200, 212, .16), transparent 70%),
-    url("../img/joaozin.jpg") center 30% / cover no-repeat;
+    url("../img/joaozin.jpg") 62% 30% / cover no-repeat;
   animation: heroZoom 18s ease-in-out infinite alternate;
 }
 @keyframes heroZoom {
