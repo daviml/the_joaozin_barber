@@ -30,6 +30,9 @@
 .ag-step { position: relative; padding-left: 3.4rem; }
 .ag-step[hidden] { display: none; }
 
+/* Passo travado: só libera depois de concluir os anteriores */
+.ag-step.is-locked { opacity: .4; pointer-events: none; user-select: none; filter: grayscale(.3); }
+
 /* Número em círculo — apagado por padrão, dourado quando o passo é concluído */
 .ag-step__num {
   position: absolute; left: 0; top: 0; z-index: 2;

@@ -1,7 +1,7 @@
 /* Service Worker — The Joãozin Barber
    Estratégia: pré-cache do essencial + cache-first para imagens/estáticos
    e network-first para o HTML (conteúdo sempre atualizado quando online). */
-var CACHE = "joaozin-barber-v7";
+var CACHE = "joaozin-barber-v8";
 
 var PRECACHE = [
   "./",

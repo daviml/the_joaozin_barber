@@ -368,19 +368,6 @@
     return grade;
   }
 
-  // Dia sugerido ao abrir: hoje (se for dia aberto) ou o próximo dia aberto dentro do calendário.
-  function diaPadrao() {
-    var lim = limitesMeses();
-    var d = new Date();
-    d.setHours(0, 0, 0, 0);
-    for (var i = 0; i <= 92; i++) {
-      if (mesIndex(d.getFullYear(), d.getMonth()) > lim.max) break;
-      if (CONFIG.DIAS_ABERTOS.indexOf(d.getDay()) !== -1) return dateKey(d);
-      d.setDate(d.getDate() + 1);
-    }
-    return null;
-  }
-
   function renderDias() {
     var box = $("ag-dias");
     if (!box) return;
@@ -503,7 +490,8 @@
     }
   }
 
-  // Acende o número de cada passo (dourado) conforme vai sendo preenchido.
+  // Passo a passo: acende o número (dourado) quando o passo é concluído e
+  // TRAVA os passos seguintes enquanto os anteriores não estiverem preenchidos.
   function atualizarPassos() {
     var steps = document.querySelectorAll(".ag-wizard .ag-step");
     if (!steps.length) return;
@@ -516,8 +504,12 @@
       !!state.hora,
       nome.length >= 2 && whats.length >= 10
     ];
+    // Um passo só é liberado quando todos os anteriores estão concluídos.
+    var liberado = true;
     Array.prototype.forEach.call(steps, function (el, i) {
       el.classList.toggle("is-done", !!feito[i]);
+      el.classList.toggle("is-locked", !liberado);
+      if (!feito[i]) liberado = false;
     });
   }
 
@@ -888,18 +880,6 @@
         if (m && !m.hidden) { m.hidden = true; document.body.style.overflow = ""; }
       });
     });
-
-    // Já deixa o dia atual (ou o próximo aberto) selecionado, pra mostrar horários assim
-    // que houver um profissional escolhido — sem exigir clique no calendário.
-    if (state.data == null) {
-      var dp = diaPadrao();
-      if (dp) {
-        state.data = dp;
-        var p = dp.split("-");
-        state.calAno = Number(p[0]);
-        state.calMes = Number(p[1]) - 1;
-      }
-    }
 
     renderBarbeiros();
     renderServicos();
