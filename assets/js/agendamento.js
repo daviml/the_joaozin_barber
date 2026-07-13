@@ -116,6 +116,32 @@
     return "(" + d.slice(0, 2) + ") " + d.slice(2, 7) + "-" + d.slice(7);
   }
 
+  // Rolagem automática no mobile: ao concluir um passo, leva a tela até o
+  // início do próximo. Só dispara em telas pequenas (matchMedia, não user-agent).
+  function ehMobile() {
+    return window.matchMedia("(max-width: 700px)").matches;
+  }
+
+  function rolarParaProximoPasso(elDentroDoPasso) {
+    if (!elDentroDoPasso || !ehMobile()) return;
+    var passo = elDentroDoPasso.closest ? elDentroDoPasso.closest(".ag-step") : null;
+    if (!passo) return;
+    // Pula passos escondidos (ex.: escolher profissional some com um só barbeiro).
+    var prox = passo.nextElementSibling;
+    while (prox && (!prox.classList.contains("ag-step") || prox.hidden)) {
+      prox = prox.nextElementSibling;
+    }
+    if (!prox) return;
+    // Espera o layout: o próximo passo pode ter sido preenchido agora (horários,
+    // serviços) e ainda não ter altura/posição definitiva.
+    window.requestAnimationFrame(function () {
+      var header = document.querySelector(".header");
+      var offset = (header ? header.getBoundingClientRect().height : 0) + 12;
+      var y = prox.getBoundingClientRect().top + window.pageYOffset - offset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    });
+  }
+
   function barbeiroAtual() {
     return CONFIG.BARBEIROS.filter(function (b) { return b.id === state.barbeiro; })[0] || null;
   }
@@ -248,6 +274,7 @@
         renderServicos();
         renderHorarios();
         atualizarResumo();
+        rolarParaProximoPasso(card); // profissional escolhido → passo de serviços
       });
       box.appendChild(card);
     });
@@ -279,6 +306,11 @@
         if (i === -1) {
           state.servicos.push(s.nome);
           b.classList.add("is-active");
+          // Só rola ao ADICIONAR (não ao remover). O cliente pode voltar aqui
+          // e marcar mais serviços quando quiser — a rolagem não trava isso.
+          atualizarResumo();
+          rolarParaProximoPasso(b);
+          return;
         } else {
           state.servicos.splice(i, 1);
           b.classList.remove("is-active");
@@ -360,6 +392,7 @@
             btn.classList.add("is-active");
             renderHorarios();
             atualizarResumo();
+            rolarParaProximoPasso(btn); // dia escolhido → passo de horários
           });
         })(key, cel);
       }
@@ -480,6 +513,7 @@
           Array.prototype.forEach.call(box.children, function (c) { c.classList.remove("is-active"); });
           b.classList.add("is-active");
           atualizarResumo();
+          rolarParaProximoPasso(b); // horário escolhido → passo "Seus dados"
         });
       }
       box.appendChild(b);
