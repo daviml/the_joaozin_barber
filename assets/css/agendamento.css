@@ -24,13 +24,43 @@
   font-size: .9rem; text-align: center;
 }
 
-/* Wizard */
+/* Wizard — stepper vertical com números ligados por uma linha */
 .ag-wizard { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 2rem; }
-.ag-step__label {
-  display: block; font-weight: 700; color: var(--gold);
-  font-size: .95rem; margin-bottom: .9rem; letter-spacing: .02em;
-}
+
+.ag-step { position: relative; padding-left: 3.4rem; }
 .ag-step[hidden] { display: none; }
+
+/* Número em círculo — apagado por padrão, dourado quando o passo é concluído */
+.ag-step__num {
+  position: absolute; left: 0; top: 0; z-index: 2;
+  width: 2.2rem; height: 2.2rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  background: var(--surface); border: 1.5px solid var(--line);
+  color: var(--muted); font-weight: 800; font-size: 1.05rem;
+  transition: background .2s, color .2s, border-color .2s, box-shadow .2s;
+}
+.ag-step.is-done .ag-step__num {
+  background: linear-gradient(135deg, var(--gold), var(--gold-2));
+  border-color: transparent; color: var(--dark-ink);
+  box-shadow: 0 3px 12px rgba(var(--accent-rgb), .35);
+}
+
+/* Linha vertical que liga um número ao próximo (some no último passo) */
+.ag-step::before {
+  content: ""; position: absolute;
+  left: calc(1.1rem - 1px); top: 0; bottom: -2rem; width: 2px;
+  background: var(--line); z-index: 1;
+  transition: background .2s;
+}
+.ag-step.is-done::before { background: rgba(var(--accent-rgb), .55); }
+.ag-step:last-child::before { display: none; }
+
+.ag-step__label {
+  font-weight: 700; color: var(--gold);
+  font-size: .95rem; margin-bottom: .9rem; letter-spacing: .02em;
+  min-height: 2.2rem; display: flex; align-items: center;
+}
 
 /* Seleção de profissional (barbeiro) */
 .ag-barbers {
@@ -56,11 +86,11 @@
 .ag-barber.is-active .ag-barber__foto { border-color: var(--gold); }
 
 /* Chips de serviço */
-.ag-chips { display: flex; flex-wrap: wrap; gap: .7rem; }
+.ag-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
 .ag-chip {
-  display: inline-flex; align-items: center; gap: .6em; text-align: left;
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: .3em;
   background: var(--surface); border: 1px solid var(--line); color: var(--text);
-  border-radius: 14px; padding: .65em 1.1em; cursor: pointer; font-size: .95rem;
+  border-radius: 14px; padding: .85em .5em; cursor: pointer; font-size: .9rem;
   font-family: var(--font-body); transition: border-color .15s, background .15s, transform .1s;
 }
 .ag-chip:hover { border-color: rgba(var(--accent-rgb), .6); transform: translateY(-1px); }
@@ -68,13 +98,13 @@
   background: linear-gradient(135deg, var(--gold), var(--gold-2));
   color: var(--dark-ink); border-color: var(--gold);
 }
-.ag-chip__ic { font-size: 1.2em; }
-.ag-chip__txt { display: flex; flex-direction: column; line-height: 1.15; }
+.ag-chip__ic { font-size: 1.5em; }
+.ag-chip__txt { display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
 .ag-chip__nome { font-weight: 600; }
-.ag-chip__meta { font-size: .78rem; color: var(--muted); margin-top: .12rem; }
+.ag-chip__meta { font-size: .75rem; color: var(--muted); margin-top: .15rem; }
 .ag-chip.is-active .ag-chip__nome { font-weight: 700; }
 .ag-chip.is-active .ag-chip__meta { color: rgba(20, 20, 26, .72); }
-.ag-chips .ag-hint { width: 100%; }
+.ag-chips .ag-hint { grid-column: 1 / -1; }
 
 /* Calendário de dias (um mês, com navegação) */
 .ag-cal { max-width: 400px; margin: 0 auto; touch-action: pan-y; }

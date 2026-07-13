@@ -43,8 +43,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/agendamento.css">
+  <link rel="stylesheet" href="assets/css/style.css?v=6">
+  <link rel="stylesheet" href="assets/css/agendamento.css?v=6">
 
   <!-- ============================================================
        GOOGLE ADS / ANALYTICS (gtag)
@@ -156,29 +156,34 @@
 
       <div class="ag-wizard reveal">
         <div class="ag-step">
-          <span class="ag-step__label">1 · Escolha o profissional</span>
+          <span class="ag-step__num">1</span>
+          <span class="ag-step__label">Escolha o profissional</span>
           <p class="ag-hint ag-hint--sub">Cada profissional tem sua própria agenda e seus serviços.</p>
           <div class="ag-barbers" id="ag-barbeiros"></div>
         </div>
 
         <div class="ag-step">
-          <span class="ag-step__label">2 · Escolha o(s) serviço(s)</span>
+          <span class="ag-step__num">2</span>
+          <span class="ag-step__label">Escolha o(s) serviço(s)</span>
           <p class="ag-hint ag-hint--sub">Pode marcar mais de um — ex.: Corte + Barba.</p>
           <div class="ag-chips" id="ag-servicos"></div>
         </div>
 
         <div class="ag-step">
-          <span class="ag-step__label">3 · Escolha o dia</span>
+          <span class="ag-step__num">3</span>
+          <span class="ag-step__label">Escolha o dia</span>
           <div class="ag-days" id="ag-dias"></div>
         </div>
 
         <div class="ag-step">
-          <span class="ag-step__label">4 · Escolha o horário</span>
+          <span class="ag-step__num">4</span>
+          <span class="ag-step__label">Escolha o horário</span>
           <div class="ag-times" id="ag-horarios"></div>
         </div>
 
         <form class="ag-step ag-form" id="ag-form" novalidate>
-          <span class="ag-step__label">5 · Seus dados</span>
+          <span class="ag-step__num">5</span>
+          <span class="ag-step__label">Seus dados</span>
           <input type="text" id="ag-nome" placeholder="Seu nome" autocomplete="name" maxlength="80">
           <input type="tel" id="ag-whats" placeholder="WhatsApp com DDD — (34) 99999-9999" autocomplete="tel" inputmode="numeric">
           <div class="ag-summary" id="ag-resumo" hidden></div>
@@ -403,7 +408,7 @@
     <img src="" alt="Foto ampliada">
   </div>
 
-  <script src="assets/js/app.js"></script>
-  <script src="assets/js/agendamento.js"></script>
+  <script src="assets/js/app.js?v=6"></script>
+  <script src="assets/js/agendamento.js?v=6"></script>
 </body>
 </html>

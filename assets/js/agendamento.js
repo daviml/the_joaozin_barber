@@ -368,6 +368,19 @@
     return grade;
   }
 
+  // Dia sugerido ao abrir: hoje (se for dia aberto) ou o próximo dia aberto dentro do calendário.
+  function diaPadrao() {
+    var lim = limitesMeses();
+    var d = new Date();
+    d.setHours(0, 0, 0, 0);
+    for (var i = 0; i <= 92; i++) {
+      if (mesIndex(d.getFullYear(), d.getMonth()) > lim.max) break;
+      if (CONFIG.DIAS_ABERTOS.indexOf(d.getDay()) !== -1) return dateKey(d);
+      d.setDate(d.getDate() + 1);
+    }
+    return null;
+  }
+
   function renderDias() {
     var box = $("ag-dias");
     if (!box) return;
@@ -490,10 +503,29 @@
     }
   }
 
+  // Acende o número de cada passo (dourado) conforme vai sendo preenchido.
+  function atualizarPassos() {
+    var steps = document.querySelectorAll(".ag-wizard .ag-step");
+    if (!steps.length) return;
+    var nome = (($("ag-nome") && $("ag-nome").value) || "").trim();
+    var whats = (($("ag-whats") && $("ag-whats").value) || "").replace(/\D/g, "");
+    var feito = [
+      !!state.barbeiro,
+      state.servicos.length > 0,
+      !!state.data,
+      !!state.hora,
+      nome.length >= 2 && whats.length >= 10
+    ];
+    Array.prototype.forEach.call(steps, function (el, i) {
+      el.classList.toggle("is-done", !!feito[i]);
+    });
+  }
+
   function atualizarResumo() {
     var resumo = $("ag-resumo");
     var btn = $("ag-confirmar");
     var completo = state.barbeiro && state.servicos.length && state.data && state.hora;
+    atualizarPassos();
     if (resumo) {
       if (completo) {
         resumo.innerHTML =
@@ -553,13 +585,39 @@
     var modal = $("ag-sucesso");
     if (!modal) return;
     var corpo = $("ag-sucesso-corpo");
+
+    // Mensagem pronta que o cliente envia PARA o barbeiro (avisa que marcou).
+    // A agenda já foi salva; isto é só o aviso no WhatsApp, num toque.
+    // Emojis via code point (ASCII no arquivo) pra não corromper conforme o charset do servidor.
+    var E = {
+      barber: String.fromCodePoint(0x1F488),   // 💈
+      cal: String.fromCodePoint(0x1F4C5),       // 📅
+      clock: String.fromCodePoint(0x23F0),      // ⏰
+      scissors: String.fromCodePoint(0x2702, 0xFE0F), // ✂️
+      pray: String.fromCodePoint(0x1F64F),      // 🙏
+      person: String.fromCodePoint(0x1F464)     // 👤
+    };
+    var texto =
+      "Olá! Acabei de agendar pelo site " + E.barber + "\n\n" +
+      E.cal + " " + formatarDataLonga(booking.date) + "\n" +
+      E.clock + " " + booking.time + "\n" +
+      E.scissors + " " + booking.service + "\n" +
+      E.barber + " Profissional: " + nomeBarbeiro(booking.barber) + "\n" +
+      E.person + " Cliente: " + booking.name + "\n\n" +
+      "Pode confirmar pra mim? " + E.pray;
+    // Direto no api.whatsapp.com: o redirect do wa.me corrompe emoji (4 bytes -> �) no WhatsApp Web.
+    var waConfirmar = "https://api.whatsapp.com/send?phone=" + CONFIG.WHATS + "&text=" + encodeURIComponent(texto);
+
     corpo.innerHTML =
       '<div class="ag-ok__check">✓</div>' +
       "<h3>Horário confirmado!</h3>" +
-      '<p class="ag-ok__resumo"><strong>' + booking.service + "</strong><br>com " + escapeHtml(nomeBarbeiro(booking.barber)) + "<br>" +
+      '<p class="ag-ok__resumo"><strong>' + escapeHtml(booking.service) + "</strong><br>com " + escapeHtml(nomeBarbeiro(booking.barber)) + "<br>" +
       formatarDataLonga(booking.date) + " às <strong>" + booking.time + "</strong></p>" +
-      '<p class="ag-ok__nota">Te esperamos na R. Feliciano de Morais, 647 (Nossa Sra. Aparecida). Chegue uns minutinhos antes 💈</p>' +
-      '<button type="button" class="btn btn--gold btn--lg" id="ag-sucesso-fechar">Fechar</button>';
+      '<p class="ag-ok__nota">Toque no botão abaixo e é só apertar <strong>enviar</strong> pra avisar a barbearia 👇</p>' +
+      '<div class="ag-ok__acoes">' +
+      '<a class="btn btn--whats btn--lg" href="' + waConfirmar + '" target="_blank" rel="noopener" id="ag-sucesso-whats">Confirmar pelo WhatsApp</a>' +
+      '<button type="button" class="btn btn--outline" id="ag-sucesso-fechar">Fechar</button>' +
+      "</div>";
     modal.hidden = false;
     document.body.style.overflow = "hidden";
     $("ag-sucesso-fechar").addEventListener("click", fecharSucesso);
@@ -783,8 +841,11 @@
     if (whats) {
       whats.addEventListener("input", function () {
         whats.value = formatarTelefone(whats.value);
+        atualizarPassos();
       });
     }
+    var nome = $("ag-nome");
+    if (nome) nome.addEventListener("input", atualizarPassos);
 
     var form = $("ag-form");
     if (form) form.addEventListener("submit", confirmar);
@@ -827,6 +888,18 @@
         if (m && !m.hidden) { m.hidden = true; document.body.style.overflow = ""; }
       });
     });
+
+    // Já deixa o dia atual (ou o próximo aberto) selecionado, pra mostrar horários assim
+    // que houver um profissional escolhido — sem exigir clique no calendário.
+    if (state.data == null) {
+      var dp = diaPadrao();
+      if (dp) {
+        state.data = dp;
+        var p = dp.split("-");
+        state.calAno = Number(p[0]);
+        state.calMes = Number(p[1]) - 1;
+      }
+    }
 
     renderBarbeiros();
     renderServicos();
