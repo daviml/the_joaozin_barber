@@ -323,13 +323,14 @@
 
 @media (max-width: 560px) {
   /* No mobile o passo tem menos largura útil (padding do círculo do número):
-     os chips caem para 2 colunas para não estourarem a tela. */
-  .ag-chips { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  /* Profissionais continuam em 3 colunas na mesma linha; encolhe padding,
-     gap e foto para caberem na largura reduzida. */
-  .ag-barbers { gap: .5rem; }
+     profissionais e serviços continuam em 3 colunas na mesma linha;
+     encolhe gap, padding e fontes para caberem na largura reduzida. */
+  .ag-chips, .ag-barbers { gap: .5rem; }
   .ag-barber { padding: .7rem .35rem; font-size: .85rem; }
   .ag-barber__foto { width: 56px; height: 56px; }
+  .ag-chip { padding: .7em .3em; font-size: .8rem; }
+  .ag-chip__ic { font-size: 1.3em; }
+  .ag-chip__meta { font-size: .68rem; }
   /* Aproxima os cards da margem esquerda pra sobrar mais espaço. */
   .ag-step { padding-left: 2.9rem; }
 }
