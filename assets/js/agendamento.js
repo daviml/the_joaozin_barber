@@ -74,6 +74,7 @@
 
   var DIAS_SEMANA = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
   var DIAS_MINI = ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"];
+  var DIAS_LONGOS = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
   var MESES = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
   var MESES_LONGOS = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
@@ -88,7 +89,10 @@
     carregando: false,
     calAno: null,    // mês em exibição no calendário
     calMes: null,
-    detalheSlot: null // { date, hora, barber } do horário aberto no modal de detalhe
+    detalheSlot: null, // { date, hora, barber } do horário aberto no modal de detalhe
+    adminDia: null,    // dia (dateKey "YYYY-MM-DD") em exibição na Agenda do dia
+    adminAnim: null,   // direção da transição do card: "next" | "prev" | null
+    adminBarbeiro: null // id do barbeiro cuja agenda está sendo exibida
   };
 
   /* ================== HELPERS ================== */
@@ -106,6 +110,20 @@
     var p = key.split("-");
     var d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
     return DIAS_SEMANA[d.getDay()] + ", " + Number(p[2]) + " de " + MESES[Number(p[1]) - 1];
+  }
+
+  // Data por extenso para o título da Agenda do dia (ex.: "Quarta, 15 de Julho")
+  function formatarDataAgenda(key) {
+    var p = key.split("-");
+    var d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    return DIAS_LONGOS[d.getDay()] + ", " + Number(p[2]) + " de " + MESES_LONGOS[Number(p[1]) - 1];
+  }
+
+  // Agendamentos de um dia, ordenados por horário (o barbeiro é filtrado no render).
+  function bookingsDoDia(key) {
+    return state.bookings
+      .filter(function (b) { return b.date === key; })
+      .sort(function (a, c) { return a.time < c.time ? -1 : (a.time > c.time ? 1 : 0); });
   }
 
   function formatarTelefone(v) {
@@ -796,42 +814,131 @@
       return;
     }
 
-    // Autenticado: lista os agendamentos futuros
-    var futuros = state.bookings
-      .filter(function (b) { return b.date >= hojeKey(); })
-      .sort(function (a, c) {
-        return (a.date + a.time) < (c.date + c.time) ? -1 : 1;
-      });
+    // Autenticado: abre a Agenda do dia (por barbeiro), começando SEMPRE em hoje.
+    state.adminDia = hojeKey();
+    state.adminAnim = null;
+    // Começa no barbeiro já escolhido no fluxo, ou no primeiro da lista.
+    state.adminBarbeiro = state.barbeiro || (CONFIG.BARBEIROS[0] && CONFIG.BARBEIROS[0].id) || null;
+    renderAgendaDia();
+  }
+
+  /* ---------- Agenda do dia (por barbeiro) ---------- */
+  // Avança/retrocede o dia exibido e anima o card na direção do gesto.
+  function mudarDiaAdmin(delta) {
+    if (!state.adminDia) state.adminDia = hojeKey();
+    var p = state.adminDia.split("-");
+    var d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    d.setDate(d.getDate() + delta);
+    state.adminDia = dateKey(d);
+    state.adminAnim = delta < 0 ? "prev" : "next";
+    renderAgendaDia();
+  }
+
+  // Navegação por gesto (mobile first): arrastar p/ esquerda = próximo dia.
+  function attachAgendaSwipe(el) {
+    if (!el) return;
+    var tx = 0, ty = 0;
+    el.addEventListener("touchstart", function (ev) {
+      tx = ev.changedTouches[0].clientX; ty = ev.changedTouches[0].clientY;
+    }, { passive: true });
+    el.addEventListener("touchend", function (ev) {
+      var dx = ev.changedTouches[0].clientX - tx;
+      var dy = ev.changedTouches[0].clientY - ty;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        mudarDiaAdmin(dx < 0 ? 1 : -1);
+      }
+    }, { passive: true });
+  }
+
+  function renderAgendaDia() {
+    var corpo = $("ag-admin-corpo");
+    if (!corpo) return;
+    if (!state.adminDia) state.adminDia = hojeKey();
+    if (!state.adminBarbeiro) state.adminBarbeiro = (CONFIG.BARBEIROS[0] && CONFIG.BARBEIROS[0].id) || null;
+
+    // Só os agendamentos do barbeiro selecionado (cada um tem a sua agenda).
+    var doDia = bookingsDoDia(state.adminDia).filter(function (b) { return b.barber === state.adminBarbeiro; });
+    var ehHoje = state.adminDia === hojeKey();
+    var cont = doDia.length
+      ? doDia.length + (doDia.length > 1 ? " agendamentos" : " agendamento")
+      : "sem agendamentos";
+
+    var animCls = state.adminAnim === "next" ? " ag-slide-next"
+      : state.adminAnim === "prev" ? " ag-slide-prev" : " ag-slide-fade";
+    state.adminAnim = null;
+
+    var subtitulo = cont + (state.demo ? " · demonstração" : "");
+
+    // Seletor de barbeiro (foto + nome) — fixo no topo, acima da data, fora do card.
+    var seletor = '<div class="ag-agenda__barbeiros" id="ag-agenda-barbeiros">';
+    CONFIG.BARBEIROS.forEach(function (barb) {
+      seletor +=
+        '<button type="button" class="ag-agenda__barb' + (barb.id === state.adminBarbeiro ? " is-active" : "") + '" data-barb="' + barb.id + '">' +
+        '<img class="ag-agenda__barb-foto" src="' + barb.foto + '" alt="' + escapeHtml(barb.nome) + '" loading="lazy" width="44" height="44">' +
+        '<span class="ag-agenda__barb-nome">' + escapeHtml(barb.nome) + "</span>" +
+        "</button>";
+    });
+    seletor += "</div>";
 
     var html =
-      "<h3>Agendamentos" + (state.demo ? " (demonstração)" : "") + "</h3>";
-    if (!futuros.length) {
-      html += '<p class="ag-hint">Nenhum horário marcado. 🎉</p>';
+      '<div class="ag-agenda" id="ag-agenda">' +
+      seletor +
+      '<div class="ag-agenda__viewport">' +
+      '<div class="ag-agenda__card' + animCls + '">' +
+      '<h3 class="ag-agenda__titulo">' + formatarDataAgenda(state.adminDia) + (ehHoje ? " · hoje" : "") + "</h3>" +
+      '<p class="ag-agenda__cont">' + subtitulo + "</p>";
+
+    if (!doDia.length) {
+      html += '<p class="ag-hint ag-agenda__vazio">Nenhum horário marcado nesse dia. 🎉</p>';
     } else {
       html += '<ul class="ag-lista">';
-      futuros.forEach(function (b) {
+      doDia.forEach(function (b) {
         var wa = "https://wa.me/" + (b.phone.length > 11 ? b.phone : "55" + b.phone);
         html +=
           '<li class="ag-lista__item" data-id="' + b.id + '">' +
-          "<div><strong>" + formatarDataLonga(b.date) + " · " + b.time + " · " + escapeHtml(nomeBarbeiro(b.barber)) + "</strong><br>" +
-          "<span>" + escapeHtml(b.name) + " — " + escapeHtml(b.service) + "</span><br>" +
-          '<a href="' + wa + '" target="_blank" rel="noopener" class="ag-lista__wa">' +
-          formatarTelefone(b.phone) + "</a></div>" +
+          '<div class="ag-lista__info">' +
+          '<span class="ag-lista__topo"><strong class="ag-lista__hora">' + b.time + "</strong>" +
+          '<span class="ag-lista__nome">' + escapeHtml(b.name) + "</span></span>" +
+          '<span class="ag-lista__sub">' + escapeHtml(b.service) + " · " + formatarTelefone(b.phone) + "</span>" +
+          "</div>" +
+          '<div class="ag-lista__acoes">' +
+          '<a href="' + wa + '" target="_blank" rel="noopener" class="ag-wa" aria-label="Chamar no WhatsApp">💬</a>' +
           '<button type="button" class="ag-del" data-id="' + b.id + '" aria-label="Remover">🗑️</button>' +
-          "</li>";
+          "</div></li>";
       });
       html += "</ul>";
     }
+
+    html += "</div></div>"; // card + viewport
+    html += '<p class="ag-agenda__dica">Arraste para o lado para ver outros dias</p>';
+    html += "</div>"; // .ag-agenda
     html +=
       '<p class="ag-msg" id="ag-admin-msg"></p>' +
       '<div class="ag-modal__acoes">' +
+      (ehHoje ? "" : '<button type="button" class="btn btn--outline" id="ag-ag-hoje">Hoje</button>') +
       '<button type="button" class="btn btn--outline" id="ag-admin-fechar">Fechar</button>' +
       "</div>";
-    var corpoEl = $("ag-admin-corpo");
-    corpoEl.innerHTML = html;
+
+    corpo.innerHTML = html;
+
     $("ag-admin-fechar").addEventListener("click", fecharAdmin);
 
-    Array.prototype.forEach.call(corpoEl.querySelectorAll(".ag-del"), function (btn) {
+    var hojeBtn = $("ag-ag-hoje");
+    if (hojeBtn) hojeBtn.addEventListener("click", function () {
+      state.adminDia = hojeKey(); state.adminAnim = null; renderAgendaDia();
+    });
+
+    // Trocar de barbeiro: mantém o dia, só troca a agenda mostrada.
+    Array.prototype.forEach.call(corpo.querySelectorAll(".ag-agenda__barb"), function (btn) {
+      btn.addEventListener("click", function () {
+        var id = btn.getAttribute("data-barb");
+        if (id === state.adminBarbeiro) return;
+        state.adminBarbeiro = id; state.adminAnim = null; renderAgendaDia();
+      });
+    });
+
+    // Excluir: reusa o fluxo de remoção com senha já existente; re-renderiza o mesmo dia/barbeiro.
+    Array.prototype.forEach.call(corpo.querySelectorAll(".ag-del"), function (btn) {
       btn.addEventListener("click", async function () {
         var id = btn.getAttribute("data-id");
         btn.disabled = true;
@@ -843,11 +950,15 @@
           return;
         }
         await recarregar();
-        renderAdmin(true);
+        state.adminAnim = null;
+        renderAgendaDia();
+        // Mantém a grade principal de horários em sincronia.
         renderHorarios();
         atualizarResumo();
       });
     });
+
+    attachAgendaSwipe($("ag-agenda"));
   }
 
   function escapeHtml(s) {

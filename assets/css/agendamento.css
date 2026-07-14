@@ -67,7 +67,7 @@
 
 /* Seleção de profissional (barbeiro) */
 .ag-barbers {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: .8rem;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem;
 }
 .ag-barber {
   display: flex; flex-direction: column; align-items: center; gap: .6rem;
@@ -89,7 +89,7 @@
 .ag-barber.is-active .ag-barber__foto { border-color: var(--gold); }
 
 /* Chips de serviço */
-.ag-chips { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
+.ag-chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; }
 .ag-chip {
   display: flex; flex-direction: column; align-items: center; text-align: center; gap: .3em;
   background: var(--surface); border: 1px solid var(--line); color: var(--text);
@@ -102,7 +102,7 @@
   color: var(--dark-ink); border-color: var(--gold);
 }
 .ag-chip__ic { font-size: 1.5em; }
-.ag-chip__txt { display: flex; flex-direction: column; align-items: center; line-height: 1.2; }
+.ag-chip__txt { display: flex; flex-direction: column; align-items: center; line-height: 1.2; max-width: 100%; overflow-wrap: break-word; word-break: break-word; }
 .ag-chip__nome { font-weight: 600; }
 .ag-chip__meta { font-size: .75rem; color: var(--muted); margin-top: .15rem; }
 .ag-chip.is-active .ag-chip__nome { font-weight: 700; }
@@ -199,13 +199,15 @@
 .ag-msg--info { color: var(--muted); }
 .ag-msg--ok { color: #7ee2a8; }
 
-/* Link admin */
+/* Botão admin: contorno discreto, sem fundo colorido; realça no hover */
 .ag-admin-link {
-  display: block; margin: 2.5rem auto 0; background: none; border: 0;
-  color: var(--muted); font-size: .85rem; cursor: pointer; text-decoration: underline;
-  font-family: var(--font-body);
+  display: flex; align-items: center; justify-content: center; gap: .4rem;
+  width: fit-content; margin: 2.5rem auto 0; background: none;
+  border: 1px solid var(--line); color: var(--muted); font-size: .82rem;
+  cursor: pointer; text-decoration: none; font-family: var(--font-body);
+  padding: .55em 1em; border-radius: 10px; transition: border-color .12s, color .12s;
 }
-.ag-admin-link:hover { color: var(--gold); }
+.ag-admin-link:hover { color: var(--gold); border-color: var(--gold); }
 
 /* Modais (admin e sucesso) */
 .ag-modal {
@@ -234,14 +236,67 @@
 .ag-ok__nota { color: var(--muted); font-size: .9rem; margin-bottom: 1.4rem; }
 #ag-sucesso-corpo .btn { width: 100%; justify-content: center; margin-bottom: .7rem; }
 
-/* Lista admin */
-.ag-lista { list-style: none; margin: 1rem 0 0; padding: 0; text-align: left; }
-.ag-lista__item {
-  display: flex; align-items: center; justify-content: space-between; gap: .8rem;
-  padding: .9rem 0; border-bottom: 1px solid var(--line); font-size: .92rem;
+/* ===== Agenda do dia (por barbeiro) ===== */
+.ag-agenda { text-align: left; touch-action: pan-y; }
+
+/* Seletor de barbeiro no topo — fora do card (não desliza) */
+.ag-agenda__barbeiros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem; margin-bottom: 1.1rem; }
+.ag-agenda__barb {
+  display: flex; flex-direction: column; align-items: center; gap: .4rem;
+  background: var(--surface); border: 1px solid var(--line); color: var(--muted);
+  border-radius: 12px; padding: .6rem .3rem; cursor: pointer; font-size: .8rem;
+  font-family: var(--font-body);
+  transition: border-color .15s, background .15s, color .15s;
 }
-.ag-lista__item span { color: var(--muted); }
-.ag-lista__wa { color: var(--gold); font-size: .88rem; }
+.ag-agenda__barb:hover { border-color: rgba(var(--accent-rgb), .6); }
+.ag-agenda__barb-foto {
+  width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
+  border: 2px solid var(--line); transition: border-color .15s;
+}
+.ag-agenda__barb-nome { font-weight: 600; text-transform: capitalize; }
+.ag-agenda__barb.is-active {
+  border-color: var(--gold); background: rgba(var(--accent-rgb), .1); color: var(--text);
+}
+.ag-agenda__barb.is-active .ag-agenda__barb-foto { border-color: var(--gold); }
+
+/* Viewport recorta o card durante o slide */
+.ag-agenda__viewport { overflow: hidden; }
+.ag-agenda__card { will-change: transform; }
+.ag-agenda .ag-agenda__titulo {
+  text-align: center; font-size: 1.25rem; text-transform: capitalize; margin-bottom: .1rem;
+}
+.ag-agenda__cont { text-align: center; color: var(--muted); font-size: .82rem; margin-bottom: .4rem; }
+.ag-agenda__dica { text-align: center; color: var(--muted); font-size: .76rem; margin: .7rem 0 0; opacity: .7; }
+.ag-agenda__vazio { text-align: center; padding: 1.8rem 0; }
+
+@keyframes agSlideNext { from { opacity: .2; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes agSlidePrev { from { opacity: .2; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes agFade { from { opacity: .2; } to { opacity: 1; } }
+.ag-slide-next { animation: agSlideNext .26s cubic-bezier(.22, .61, .36, 1); }
+.ag-slide-prev { animation: agSlidePrev .26s cubic-bezier(.22, .61, .36, 1); }
+.ag-slide-fade { animation: agFade .2s ease; }
+@media (prefers-reduced-motion: reduce) {
+  .ag-slide-next, .ag-slide-prev, .ag-slide-fade { animation: none; }
+}
+
+/* Itens da lista (formato lista + excluir, arejado) */
+.ag-lista { list-style: none; margin: 1rem 0 0; padding: 0; text-align: left; }
+.ag-agenda .ag-lista__item {
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding: 1rem 0; border-bottom: 1px solid var(--line);
+}
+.ag-lista__info { display: flex; flex-direction: column; gap: .3rem; min-width: 0; }
+.ag-lista__topo { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; }
+.ag-agenda .ag-lista__hora { color: var(--gold); font-size: 1rem; }
+.ag-agenda .ag-lista__nome { font-weight: 600; color: var(--text); }
+.ag-agenda .ag-lista__sub { color: var(--muted); font-size: .84rem; }
+.ag-lista__acoes { display: flex; align-items: center; gap: .5rem; flex: 0 0 auto; }
+.ag-wa {
+  background: rgba(37, 211, 102, .12); border: 1px solid rgba(37, 211, 102, .4);
+  color: #25d366; border-radius: 8px; padding: .5em .7em; font-size: 1rem;
+  text-decoration: none; line-height: 1;
+}
+.ag-wa:hover { background: rgba(37, 211, 102, .22); }
 .ag-del {
   flex: 0 0 auto; background: rgba(255, 138, 128, .12); border: 1px solid rgba(255, 138, 128, .4);
   color: #ff8a80; border-radius: 8px; padding: .5em .7em; cursor: pointer; font-size: 1rem;
@@ -265,6 +320,14 @@
 .btn--del-full[disabled] { opacity: .5; cursor: wait; }
 #ag-detalhe-corpo .ag-modal__acoes { flex-direction: column; }
 #ag-detalhe-corpo .ag-modal__acoes .btn { width: 100%; justify-content: center; }
+
+@media (max-width: 560px) {
+  /* No mobile o passo tem menos largura útil (padding do círculo do número):
+     cai para 2 colunas para os cards não estourarem a tela. */
+  .ag-chips, .ag-barbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Aproxima os cards da margem esquerda pra sobrar mais espaço. */
+  .ag-step { padding-left: 2.9rem; }
+}
 
 @media (max-width: 480px) {
   .ag-modal__box { padding: 1.6rem 1.2rem; }
